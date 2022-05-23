@@ -1,9 +1,89 @@
+:root {
+  --bg-main-color: #00000080;
+  --bg-accent-color: #2d2d2d;
+  --accent-color: #f64435;
+  --text-accent-color: #ffe498;
+  --text-edit-bg-color: #575757;
+  --border-color: #3f3f3f;
+  --shadow-color: #202020;
+  --document-bg-color: #68686850;
+  --component-bg-gradient: radial-gradient(circle, #646464e6 0%, #363636e6 100%);
+  --smokywhite: #dddbd8;
+  --black: #000000;
+  --translucent-black: #00000099;
+}
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: 'Lato', sans-serif;
+  margin: 10px 0;
+  font-family: "Lato", sans-serif;
+  background-image: url(./src/assets/background.png);
+  background-size: cover;
+}
+
+.wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+header {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+header h1 {
+  margin: 0 0 10px 0;
+  text-align: center;
+  color: var(--accent-color);
+}
+
+/* HeaderNavigation */
+header .HeaderNavigation {
+  display: flex;
+  justify-content: center;
+}
+header .HeaderNavigation .item-add-button {
+  padding: 6px 24px;
+  margin: 0 1px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
+  text-transform: uppercase;
+  color: var(--smokywhite);
+  background-color: var(--accent-color);
+  cursor: pointer;
+}
+
+/* ItemContainer */
+.ItemContainer {
+  min-height: 80vh;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  z-index: 11;
+  padding: 30px;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }

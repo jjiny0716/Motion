@@ -3,10 +3,10 @@ import { updateElement } from "./updateElement.js";
 import { adjustChildComponents } from "./adjustChildComponents.js";
 import { ComponentError } from "./ComponentError.js";
 import { RegisteredEventListener, ComponentState } from './types.js';
-
-export default abstract class Component {
-  public props: ComponentState = {};
-  public state: ComponentState = {};
+  
+export default abstract class Component<P extends ComponentState = ComponentState, S extends ComponentState = ComponentState> {
+  public props: P = {} as P;
+  public state: S = {} as S;
   public childComponents: Record<string, Component> = {};
   private attacthedEventListeners: RegisteredEventListener[] = [];
   private isMountFinished: boolean = false;
@@ -42,7 +42,7 @@ export default abstract class Component {
     adjustChildComponents(this, childComponentData);
   }
 
-  generateChildComponent(target: Element, name: string, key: string): Component | undefined { return undefined };
+  generateChildComponent(target: HTMLElement, name: string, key: string): Component | undefined { return undefined };
   afterMount() {}
   beforeUpdate() {}
   afterUpdate() {}
@@ -78,7 +78,7 @@ export default abstract class Component {
     }
   }
 
-  destroyComponent() {
+  destroyComponent(): void {
     const childComponents = Object.values(this.childComponents);
     for (let childComponent of childComponents) {
       childComponent.destroyComponent();
@@ -88,23 +88,23 @@ export default abstract class Component {
   }
 
   setEvents(): void {};
-  addEventListener(eventType: string, selector: string, callback: (e: Event) => void) {
+  addEventListener(eventType: string, selector: string, callback: (e: Event) => void): void {
     const listener = (e: Event) => {
-      if ((e.target as Element).closest(selector)) callback(e);
+      if ((e.target as HTMLElement).closest(selector)) callback(e);
     };
     this.target.addEventListener(eventType, listener);
     this.attacthedEventListeners.push({ type: eventType, listener });
   }
 
-  removeAllEventListener() {
+  removeAllEventListener(): void {
     for (let { type, listener } of this.attacthedEventListeners) {
       this.target.removeEventListener(type, listener);
     }
     this.attacthedEventListeners = [];
   }
 
-  setState(newState: object) {
-    for (let [key, value] of Object.entries(newState)) {
+  setState<K extends keyof S & string>(newState: Pick<S, K>): void {
+    for (let [key, value] of Object.entries(newState) as Array<[K, any]>) {
       if (!this.state.hasOwnProperty(key)) {
         console.warn(`Component warning: Setting state which is not exists ('${key}') in '${this.constructor.name}'`);
         continue;
