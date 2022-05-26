@@ -1,17 +1,19 @@
 import Component from '../core/Component.js';
 
-type ImageSectionProps = {
+type NoteSectionProps = {
   title: string;
-  url: string;
+  content: string;
 }
 
-export default class NoteSection extends Component<ImageSectionProps> {
+export default class NoteSection extends Component<NoteSectionProps> {
   template(): string {
-    const { title, url  } = this.props;
+    const { title, content  } = this.props;
 
     return `
-    <img src=${url} alt=${title}>
-    <h3 class="item-title">${title}</h3>
+    <div class="content">
+      <h3 class="item-title">${title}</h3>
+      <p>${content}</p>
+    </div>
     <button class="item-delete-button">&#10006;</button>
     `;
   }

@@ -3,7 +3,7 @@ import Component from "./core/Component.js";
 import HeaderNavigation from "./components/HeaderNavigation.js";
 
 import ImageAddModal from "./components/ImageAddModal.js";
-import VideoAddModal from "./components/ImageAddModal.js";
+import VideoAddModal from "./components/VideoAddModal.js";
 import NoteAddModal from "./components/NoteAddModal.js";
 import TaskAddModal from "./components/TaskAddModal.js";
 
@@ -62,20 +62,26 @@ export default class App extends Component<{}, AppState> {
         });
       case "VideoAddModal":
         return new VideoAddModal(target, () => {
+          const { addItemToStore } = this;
           return {
             close: closeModal.bind(this),
+            addItem: addItemToStore.bind(this),
           }
         });
       case "NoteAddModal":
         return new NoteAddModal(target, () => {
+          const { addItemToStore } = this;
           return {
             close: closeModal.bind(this),
+            addItem: addItemToStore.bind(this),
           }
         });
       case "TaskAddModal":
         return new TaskAddModal(target, () => {
+          const { addItemToStore } = this;
           return {
             close: closeModal.bind(this),
+            addItem: addItemToStore.bind(this),
           }
         });
       case "ItemContainer":

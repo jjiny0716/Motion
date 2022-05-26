@@ -34,11 +34,29 @@ export default class ItemContainer extends Component {
           }
         });
       case "VideoSection":
-        return new VideoSection(target);
+        return new VideoSection(target, () => {
+          const item = itemList[Number(key)];
+          return {
+            title: item.title,
+            url: item.content,
+          }
+        });
       case "NoteSection":
-        return new NoteSection(target);
+        return new NoteSection(target, () => {
+          const item = itemList[Number(key)];
+          return {
+            title: item.title,
+            content: item.content,
+          }
+        });
       case "TaskSection":
-        return new TaskSection(target);
+        return new TaskSection(target, () => {
+          const item = itemList[Number(key)];
+          return {
+            title: item.title,
+            todoItem: item.content,
+          }
+        });
     }
   }
 }

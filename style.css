@@ -151,6 +151,8 @@ header .HeaderNavigation .item-add-button {
 .section {
   margin: 20px 0;
   box-shadow: 0 3px 12px var(--shadow-color);
+  font-size: 1.2rem;
+  color: var(--smokywhite);
   background: var(--component-bg-gradient);
   display: flex;
   justify-content: space-between;
@@ -178,4 +180,19 @@ header .HeaderNavigation .item-add-button {
 .ImageSection img {
   background-color: var(--smokywhite);
   width: 500px;
+}
+
+/* TaskSection */
+.TaskSection .task {
+  display: flex;
+  align-items: center;
+}
+
+.TaskSection .task input {
+  margin-right: 8px;
+}
+
+
+.TaskSection .task p {
+  margin: 0;
 }
