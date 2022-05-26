@@ -1,7 +1,7 @@
 import { observable } from './observer.js';
 const DEFAULT_STORAGE_KEY = "persist-store";
-export const createStore = (reducer, persistConfig) => {
-    const state = observable(reducer());
+export function createStore(reducer, persistConfig) {
+    const state = observable(reducer(undefined, undefined));
     if (persistConfig)
         restoreState(state, persistConfig);
     const frozenState = {};
@@ -24,7 +24,7 @@ export const createStore = (reducer, persistConfig) => {
         return frozenState;
     }
     return { getState, dispatch };
-};
+}
 function restoreState(state, { key: storageKey, whitelist }) {
     if (!whitelist)
         return;

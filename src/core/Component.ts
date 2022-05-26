@@ -2,7 +2,7 @@ import { observable, observe } from "./observer.js";
 import { updateElement } from "./updateElement.js";
 import { adjustChildComponents } from "./adjustChildComponents.js";
 import { ComponentError } from "./ComponentError.js";
-import { RegisteredEventListener, ComponentState } from './types.js';
+import { RegisteredEventListener, ComponentState } from './coreTypes.js';
   
 export default abstract class Component<P extends ComponentState = ComponentState, S extends ComponentState = ComponentState> {
   public props: P = {} as P;

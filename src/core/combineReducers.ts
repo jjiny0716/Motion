@@ -1,12 +1,15 @@
-import { Action, Reducer } from './types.js';
+import { Action, Reducer } from "./coreTypes.js";
 
-export function combineReducers<T extends Record<string, object>, K extends keyof T & string>(reducersMap: Record<string, Reducer>) {
-  return (state: T, action: Action) => {
-    const newState = Object.entries(reducersMap).reduce((obj: Record<string, any>, [name, reducer]) => {
-      obj[name] = reducer(state && state[name as K], action);
-      return obj;
-    }, {});
+import { ReducersMapObject } from './coreTypes.js';
+
+export function combineReducers<T extends Record<string, any>, A extends Action>(reducersMap: ReducersMapObject): Reducer<T, A> {
+  return (state?: T, action?: A) => {
+    const newState: T = {} as T;
+    (Object.entries(reducersMap) as Array<[keyof T, Reducer<T[keyof T], A>]>).forEach(([name, reducer]) => {
+      newState[name] = reducer(state && state[name], action);
+      return newState;
+    })
 
     return { ...state, ...newState };
-  }
+  };
 }

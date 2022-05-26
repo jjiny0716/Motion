@@ -1,23 +1,23 @@
 import { observable } from './observer.js';
 
-import { PersistConfig } from './types.js';
-import { Action, ComponentState, Reducer } from './types.js';
+import { PersistConfig } from './coreTypes.js';
+import { Action, ComponentState, Reducer } from './coreTypes.js';
 
 
 const DEFAULT_STORAGE_KEY = "persist-store";
 
-export const createStore = <T extends object, K extends keyof T & string>(reducer: Reducer, persistConfig: Partial<PersistConfig>) => {
-  const state: T = observable(reducer());
+export function createStore<T extends object, A extends Action, K extends keyof T & string>(reducer: Reducer<T, A>, persistConfig: Partial<PersistConfig>) {
+  const state: T = observable(reducer(undefined, undefined));
   if (persistConfig) restoreState(state, persistConfig);
   
-  const frozenState = {};
+  const frozenState: T = {} as T;
   Object.keys(state).forEach((key) => {
     Object.defineProperty(frozenState, key, {
       get: () => state[key as K], 
     })
   });
   
-  function dispatch(action: Action) {
+  function dispatch(action: A) {
     const newState = reducer(state, action);
 
     for (const [key, value] of Object.entries(newState)) {

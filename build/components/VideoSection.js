@@ -1,14 +1,11 @@
-import Component from '../core/Component';
-export default class Modal extends Component {
+import Component from '../core/Component.js';
+export default class VideoSection extends Component {
     template() {
+        const { title, url } = this.props;
         return `
-    <div class="modal-overlay">
-      <div class="modal-content">
-
-      </div>
-    </div>
+    <img src=${url} alt=${title}>
+    <h3 class="item-title">${title}</h3>
+    <button class="item-delete-button">&#10006;</button>
     `;
-    }
-    setEvents() {
     }
 }

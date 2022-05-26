@@ -1,4 +1,4 @@
-import { Action } from '../types.js'
+import { Action } from '../coreTypes.js'
 
 export function createAction(type: string, payload: any): Action {
   return {

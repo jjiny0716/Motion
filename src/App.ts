@@ -1,24 +1,37 @@
-import Component from './core/Component.js';
+import Component from "./core/Component.js";
 
-import HeaderNavigation from './components/HeaderNavigation.js';
+import HeaderNavigation from "./components/HeaderNavigation.js";
 
-import ImageAddModal from './components/ImageAddModal.js';
-import VideoAddModal from './components/ImageAddModal.js';
-import NoteAddModal from './components/NoteAddModal.js';
-import TaskAddModal from './components/TaskAddModal.js';
+import ImageAddModal from "./components/ImageAddModal.js";
+import VideoAddModal from "./components/ImageAddModal.js";
+import NoteAddModal from "./components/NoteAddModal.js";
+import TaskAddModal from "./components/TaskAddModal.js";
 
-import ItemContainer from './components/ItemContainer.js';
+import ItemContainer from "./components/ItemContainer.js";
 
-export default class App extends Component {
+import { Item } from './types.js';
+
+import { store } from "./store/store.js";
+
+import { addItem } from "./store/item/item.action.js";
+
+type AppState = {
+  currentModalName: string;
+};
+
+export default class App extends Component<{}, AppState> {
   setup() {
     this.state = {
-      
+      currentModalName: "",
     };
   }
 
   template(): string {
+    const { currentModalName } = this.state;
+
     return `
     <div class="wrap">
+      ${currentModalName ? `<div class=${currentModalName} data-component=${currentModalName}></div>` : ""}
       <header>
         <h1>MOTION</h1>
         <nav class="HeaderNavigation" data-component="HeaderNavigation"></nav>
@@ -29,11 +42,57 @@ export default class App extends Component {
   }
 
   generateChildComponent(target: HTMLElement, name: string, key: string): Component | undefined {
-    switch(name) {
+    const { closeModal } = this;
+
+    switch (name) {
       case "HeaderNavigation":
-        return new HeaderNavigation(target);
+        return new HeaderNavigation(target, () => {
+          const { openModal } = this;
+          return {
+            openModal: openModal.bind(this),
+          }
+        });
+      case "ImageAddModal":
+        return new ImageAddModal(target, () => {
+          const { addItemToStore } = this;
+          return {
+            close: closeModal.bind(this),
+            addItem: addItemToStore.bind(this),
+          }
+        });
+      case "VideoAddModal":
+        return new VideoAddModal(target, () => {
+          return {
+            close: closeModal.bind(this),
+          }
+        });
+      case "NoteAddModal":
+        return new NoteAddModal(target, () => {
+          return {
+            close: closeModal.bind(this),
+          }
+        });
+      case "TaskAddModal":
+        return new TaskAddModal(target, () => {
+          return {
+            close: closeModal.bind(this),
+          }
+        });
       case "ItemContainer":
         return new ItemContainer(target);
     }
+  }
+
+  openModal(modalName: string): void {
+    this.setState({ currentModalName: modalName });
+  }
+
+  closeModal(): void {
+    this.setState({ currentModalName: "" });
+  }
+
+  addItemToStore(item: Item): void {
+    const { itemList } = store.getState().item;
+    store.dispatch(addItem(itemList, item));
   }
 }

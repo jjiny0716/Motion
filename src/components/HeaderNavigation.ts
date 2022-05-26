@@ -1,29 +1,29 @@
 import Component from '../core/Component.js';
 
 type HeaderNavigationProps = {
-  modalMap: Record<string, () => void>;
+  openModal: (modalName: string) => void;
 }
 
 export default class HeaderNavigation extends Component<HeaderNavigationProps> {
   template(): string {
     return `
-    <button class="item-add-button" data-type="Image">Image</button>
-    <button class="item-add-button" data-type="Video">Video</button>
-    <button class="item-add-button" data-type="Note">Note</button>
-    <button class="item-add-button" data-type="Task">Task</button>
+    <button class="item-add-button" data-modal-name="ImageAddModal">Image</button>
+    <button class="item-add-button" data-modal-name="VideoAddModal">Video</button>
+    <button class="item-add-button" data-modal-name="NoteAddModal">Note</button>
+    <button class="item-add-button" data-modal-name="TaskAddModal">Task</button>
     `;
   }
 
   setEvents(): void {
-    const { modalMap } = this.props;
+    const { openModal } = this.props;
 
     this.addEventListener("click", ".item-add-button", (e) => {
       if (!e.target) return;
       const target = (e.target as HTMLElement).closest(".item-add-button") as HTMLElement;
       if (!target) return;
 
-      const { type } = target.dataset;
-      if (type) modalMap[type]();
+      const { modalName } = target.dataset;
+      if (modalName) openModal(modalName);
     });
   }
 }

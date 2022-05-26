@@ -33,7 +33,7 @@ body {
 
 header {
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--bg-main-color)
 }
 
 header h1 {
@@ -49,7 +49,8 @@ header .HeaderNavigation {
 }
 header .HeaderNavigation .item-add-button {
   padding: 6px 24px;
-  margin: 0 1px;
+  border: none;
+  margin: 0 3px;
   font-size: 1rem;
   font-weight: bold;
   font-family: "Lato", sans-serif;
@@ -57,13 +58,6 @@ header .HeaderNavigation .item-add-button {
   color: var(--smokywhite);
   background-color: var(--accent-color);
   cursor: pointer;
-}
-
-/* ItemContainer */
-.ItemContainer {
-  min-height: 80vh;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Modal */
@@ -82,8 +76,106 @@ header .HeaderNavigation .item-add-button {
 
 .modal-content {
   z-index: 11;
-  padding: 30px;
+  padding: 10px;
   border-radius: 6px;
   background-color: #fff;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* AddModal */
+.add-modal {
+  background: var(--component-bg-gradient);
+  display: flex;
+  flex-direction: column;
+}
+
+.add-modal .close-button {
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--accent-color);
+  background-color: transparent;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.add-modal .add-button {
+  padding: 5px 18px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
+  text-transform: uppercase;
+  color: var(--smokywhite);
+  background-color: var(--accent-color);
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.add-modal .FormInput {
+  margin: 0 0 15px 0;
+}
+
+/* FormInput */
+.FormInput {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.FormInput label {
+  font-size: 1.1rem;
+  color: var(--text-accent-color);
+}
+
+.FormInput input {
+  padding: 5px;
+  border: 3px solid var(--border-color);
+  font-size: 1.4rem;
+  color: var(--smokywhite);
+  background-color: var(--text-edit-bg-color);
+}
+
+.FormInput input:focus {
+  outline: none;
+}
+
+/* ItemContainer */
+.ItemContainer {
+  min-height: 80vh;
+  padding: 20px;
+  background-color: var(--document-bg-color);
+}
+
+/* Section */
+.section {
+  margin: 20px 0;
+  box-shadow: 0 3px 12px var(--shadow-color);
+  background: var(--component-bg-gradient);
+  display: flex;
+  justify-content: space-between;
+}
+
+.section .content {
+  width: 100%;
+  padding: 10px;
+}
+
+.section .content .item-title {
+  margin: 5px 0;
+  color: var(--text-accent-color);
+}
+
+.section .item-delete-button {
+  border: none;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* ImageSection */
+.ImageSection img {
+  background-color: var(--smokywhite);
+  width: 500px;
 }
