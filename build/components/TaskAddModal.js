@@ -42,7 +42,6 @@ export default class TaskAddModal extends Component {
         });
         this.addEventListener("input", "input", (e) => {
             const target = e.target;
-            console.log(target.dataset);
             this.setState({ [decapitalizeFirstLetter(target.dataset.name)]: target.value });
         });
         this.addEventListener("click", ".add-button", () => {

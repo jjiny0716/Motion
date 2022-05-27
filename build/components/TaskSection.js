@@ -13,4 +13,11 @@ export default class TaskSection extends Component {
     <button class="item-delete-button">&#10006;</button>
     `;
     }
+    setEvents() {
+        this.addEventListener("click", ".item-delete-button", (e) => {
+            const { key, xButtonClickListener } = this.props;
+            if (xButtonClickListener)
+                xButtonClickListener(Number(key));
+        });
+    }
 }

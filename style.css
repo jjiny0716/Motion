@@ -147,8 +147,8 @@ header .HeaderNavigation .item-add-button {
   background-color: var(--document-bg-color);
 }
 
-/* Section */
-.section {
+/* SectionContent */
+.sectionContent {
   margin: 20px 0;
   box-shadow: 0 3px 12px var(--shadow-color);
   font-size: 1.2rem;
@@ -158,17 +158,17 @@ header .HeaderNavigation .item-add-button {
   justify-content: space-between;
 }
 
-.section .content {
+.sectionContent .content {
   width: 100%;
   padding: 10px;
 }
 
-.section .content .item-title {
+.sectionContent .content .item-title {
   margin: 5px 0;
   color: var(--text-accent-color);
 }
 
-.section .item-delete-button {
+.sectionContent .item-delete-button {
   border: none;
   font-size: 1.2rem;
   color: var(--accent-color);
@@ -176,23 +176,23 @@ header .HeaderNavigation .item-add-button {
   cursor: pointer;
 }
 
-/* ImageSection */
-.ImageSection img {
+/* ImageSectionContent */
+.ImageSectionContent img {
   background-color: var(--smokywhite);
   width: 500px;
 }
 
-/* TaskSection */
-.TaskSection .task {
+/* TaskSectionContent */
+.TaskSectionContent .task {
   display: flex;
   align-items: center;
 }
 
-.TaskSection .task input {
+.TaskSectionContent .task input {
   margin-right: 8px;
 }
 
 
-.TaskSection .task p {
+.TaskSectionContent .task p {
   margin: 0;
 }

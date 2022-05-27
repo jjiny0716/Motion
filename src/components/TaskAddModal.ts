@@ -60,7 +60,6 @@ export default class TaskAddModal extends Component<TaskAddModalProps> {
     // state에 입력 반영
     this.addEventListener("input", "input", (e) => {
       const target = e.target as HTMLInputElement;
-      console.log(target.dataset);
       this.setState({ [decapitalizeFirstLetter(target.dataset.name as string)]: target.value })
     });
 

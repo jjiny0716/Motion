@@ -10,4 +10,11 @@ export default class NoteSection extends Component {
     <button class="item-delete-button">&#10006;</button>
     `;
     }
+    setEvents() {
+        const { key, xButtonClickListener } = this.props;
+        this.addEventListener("click", ".item-delete-button", (e) => {
+            if (xButtonClickListener)
+                xButtonClickListener(Number(key));
+        });
+    }
 }
