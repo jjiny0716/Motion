@@ -176,6 +176,15 @@ header .HeaderNavigation .item-add-button {
   cursor: pointer;
 }
 
+/* sectionContent */
+.sectionContent {
+  border: 1px solid transparent;
+}
+
+.sectionContent.targeted {
+  border-color: var(--accent-color);
+}
+
 /* ImageSectionContent */
 .ImageSectionContent img {
   background-color: var(--smokywhite);

@@ -88,7 +88,7 @@ export default abstract class Component<P extends ComponentState = ComponentStat
   }
 
   setEvents(): void {};
-  addEventListener(eventType: string, selector: string, callback: (e: Event) => void): void {
+  addEventListener(eventType: string, selector: string, callback: (e: Event) => any): void {
     const listener = (e: Event) => {
       if ((e.target as HTMLElement).closest(selector)) callback(e);
     };
