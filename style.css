@@ -142,9 +142,26 @@ header .HeaderNavigation .item-add-button {
 
 /* ItemContainer */
 .ItemContainer {
-  min-height: 80vh;
   padding: 20px;
+  height: 80vh;
+  overflow-y: auto;
   background-color: var(--document-bg-color);
+
+  /* Firefox */
+  scrollbar-width: 6px;
+  scrollbar-color: var(--bg-accent-color);
+  scrollbar-face-color: var(--accent-color);
+}
+
+.ItemContainer::-webkit-scrollbar {
+  /* Safari and Chrome */
+  background-color: var(--bg-accent-color);
+  width: 6px;
+}
+
+.ItemContainer::-webkit-scrollbar-thumb {
+  /* Safari and Chrome */
+  background-color: var(--accent-color);
 }
 
 /* SectionContent */
