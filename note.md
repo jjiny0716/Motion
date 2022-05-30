@@ -22,3 +22,16 @@ eventTarget, Element등등... closest를 못쓴다거나, dataset에 접근이 �
 
 - 타입, 인터페이스, 제네릭을 이용해서 자동완성을 받아볼 수 있다.
 - 특정 상황에서 자동완성을 받아볼 수가 없으면 뭔가 잘못 개발했다고 봐도 될까?
+
+## interface와 class 같은 이름
+
+리액트등의 라이브러리를 뜯어보면서 같은 이름의 interface와 class를 연이어 쓰는 형태를 자주 볼 수 있었다. 처음엔 별 의미없는 것이라 생각해서 무시했는데, 계속 나와서 찾아봤다.
+
+- [스택오버플로우 질문, 답](https://stackoverflow.com/questions/43055682/relationship-between-a-typescript-class-and-an-interface-with-the-same-name)
+- interface와 class를 같은 이름으로 쓰면, 합쳐진다.
+- interface 여러개를 같은 이름으로 써서 합치는 것와 같은 원리인 것 같다.
+- class의 선언부(맨 위)에 복잡한 제네릭, 상속등을 좀 빼내주는 역할을 하는 것 같다. 더 알아봐야함
+
+## readonly vs Readonly<T>
+
+- Readonly utility type은 받은 T의 모든 property를 readonly로 만드는 것이다. 헷갈리지 말자

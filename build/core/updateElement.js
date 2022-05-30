@@ -1,6 +1,8 @@
 export function updateElement(parent, newNode, oldNode) {
-    if (!newNode && oldNode)
-        return oldNode.remove();
+    if (!newNode && oldNode) {
+        oldNode.remove();
+        return;
+    }
     if (newNode && !oldNode) {
         parent.appendChild(newNode);
         return convertNodeToComponentData(newNode);

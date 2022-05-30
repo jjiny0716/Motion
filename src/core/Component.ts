@@ -2,17 +2,18 @@ import { observable, observe } from "./observer.js";
 import { updateElement } from "./updateElement.js";
 import { adjustChildComponents } from "./adjustChildComponents.js";
 import { ComponentError } from "./ComponentError.js";
-import { RegisteredEventListener, ComponentState } from './coreTypes.js';
+import { RegisteredEventListener, ComponentState, ComponentMap, ComponentKeyNameMap } from './coreTypes.js';
   
-export default abstract class Component<P extends ComponentState = ComponentState, S extends ComponentState = ComponentState> {
-  public props: P = {} as P;
+export default interface Component<P extends ComponentState = ComponentState, S extends ComponentState = ComponentState> extends ComponentLifecycle { };
+export default class Component<P, S> {
+  public props: Readonly<P> = {} as P;
   public state: S = {} as S;
-  public childComponents: Record<string, Component> = {};
+  public childComponents: ComponentMap = {};
   private attacthedEventListeners: RegisteredEventListener[] = [];
   private isMountFinished: boolean = false;
   private updateID: number = 0;
 
-  constructor(public target: HTMLElement, private propsGenerator?: Function) {
+  constructor(public target: HTMLElement, private propsGenerator?: () => P) {
     if (!target) throw new ComponentError(`Target of component is ${target} in '${this.constructor.name}'`);
     this.updateProps();
     this.setup();
@@ -20,18 +21,18 @@ export default abstract class Component<P extends ComponentState = ComponentStat
     observe(this.update.bind(this));
   }
 
-  updateProps() {
-    this.props = this.propsGenerator ? this.propsGenerator() : null;
+  updateProps(): void {
+    this.props = this.propsGenerator ? this.propsGenerator() : {} as P;
   }
 
   setup(): void {};
-  abstract template(): string;
-  render() {
+  template(): string { return '' };
+  render(): void {
     const { target } = this;
     const newNode = target.cloneNode(true) as Element;
     newNode.innerHTML = this.template();
 
-    let childComponentData = {};
+    let childComponentData: ComponentKeyNameMap = {};
     const oldChildNodes = [...target.childNodes] as Element[];
     const newChildNodes = [...newNode.childNodes] as Element[];
     const maxLength = Math.max(oldChildNodes.length, newChildNodes.length);
@@ -43,12 +44,8 @@ export default abstract class Component<P extends ComponentState = ComponentStat
   }
 
   generateChildComponent(target: HTMLElement, name: string, key: string): Component | undefined { return undefined };
-  afterMount() {}
-  beforeUpdate() {}
-  afterUpdate() {}
-  beforeUnmount() {}
 
-  update(newTarget: HTMLElement) {
+  update(newTarget: HTMLElement): void {
     if (newTarget && newTarget !== this.target) {
       this.target = newTarget;
       this.setEvents();
@@ -63,17 +60,17 @@ export default abstract class Component<P extends ComponentState = ComponentStat
     }
   }
 
-  lifeCycle() {
-    if (this.isMountFinished) this.beforeUpdate();
-    if (this.isMountFinished) this.updateProps();
+  lifeCycle(): void {
+    this.isMountFinished && this.beforeUpdate && this.beforeUpdate();
+    this.isMountFinished && this.updateProps();
     this.render();
-    if (this.isMountFinished) this.afterUpdate();
+    this.isMountFinished && this.afterUpdate && this.afterUpdate();
 
     if (!this.isMountFinished) {
       setTimeout(() => {
         this.setEvents();
         this.isMountFinished = true;
-        this.afterMount();
+        this.afterMount && this.afterMount();
       }, 0);
     }
   }
@@ -83,7 +80,7 @@ export default abstract class Component<P extends ComponentState = ComponentStat
     for (let childComponent of childComponents) {
       childComponent.destroyComponent();
     }
-    this.beforeUnmount();
+    this.beforeUnmount && this.beforeUnmount();
     this.removeAllEventListener();
   }
 
@@ -103,8 +100,8 @@ export default abstract class Component<P extends ComponentState = ComponentStat
     this.attacthedEventListeners = [];
   }
 
-  setState<K extends keyof S & string>(newState: Pick<S, K>): void {
-    for (let [key, value] of Object.entries(newState) as Array<[K, any]>) {
+  setState<K extends keyof S>(newState: Pick<S, K>): void {
+    for (let [key, value] of Object.entries(newState) as Array<[K, S[K]]>) {
       if (!this.state.hasOwnProperty(key)) {
         console.warn(`Component warning: Setting state which is not exists ('${key}') in '${this.constructor.name}'`);
         continue;
@@ -113,4 +110,11 @@ export default abstract class Component<P extends ComponentState = ComponentStat
       this.state[key] = value;
     }
   }
+}
+
+interface ComponentLifecycle {
+  afterMount?(): void;
+  beforeUpdate?(): void;
+  afterUpdate?(): void;
+  beforeUnmount?(): void;
 }

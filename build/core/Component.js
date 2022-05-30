@@ -2,6 +2,7 @@ import { observable, observe } from "./observer.js";
 import { updateElement } from "./updateElement.js";
 import { adjustChildComponents } from "./adjustChildComponents.js";
 import { ComponentError } from "./ComponentError.js";
+;
 export default class Component {
     constructor(target, propsGenerator) {
         this.target = target;
@@ -20,9 +21,11 @@ export default class Component {
         observe(this.update.bind(this));
     }
     updateProps() {
-        this.props = this.propsGenerator ? this.propsGenerator() : null;
+        this.props = this.propsGenerator ? this.propsGenerator() : {};
     }
     setup() { }
+    ;
+    template() { return ''; }
     ;
     render() {
         const { target } = this;
@@ -39,10 +42,6 @@ export default class Component {
     }
     generateChildComponent(target, name, key) { return undefined; }
     ;
-    afterMount() { }
-    beforeUpdate() { }
-    afterUpdate() { }
-    beforeUnmount() { }
     update(newTarget) {
         if (newTarget && newTarget !== this.target) {
             this.target = newTarget;
@@ -57,18 +56,15 @@ export default class Component {
         }
     }
     lifeCycle() {
-        if (this.isMountFinished)
-            this.beforeUpdate();
-        if (this.isMountFinished)
-            this.updateProps();
+        this.isMountFinished && this.beforeUpdate && this.beforeUpdate();
+        this.isMountFinished && this.updateProps();
         this.render();
-        if (this.isMountFinished)
-            this.afterUpdate();
+        this.isMountFinished && this.afterUpdate && this.afterUpdate();
         if (!this.isMountFinished) {
             setTimeout(() => {
                 this.setEvents();
                 this.isMountFinished = true;
-                this.afterMount();
+                this.afterMount && this.afterMount();
             }, 0);
         }
     }
@@ -77,7 +73,7 @@ export default class Component {
         for (let childComponent of childComponents) {
             childComponent.destroyComponent();
         }
-        this.beforeUnmount();
+        this.beforeUnmount && this.beforeUnmount();
         this.removeAllEventListener();
     }
     setEvents() { }

@@ -1,9 +1,13 @@
+import Component from './Component.js';
+
+export type ComponentState = Record<string | number | symbol, any>;
+export type ComponentMap = Record<string, Component>;
+export type ComponentKeyNameMap = Record<string, string>;
+
 export type RegisteredEventListener = {
   type: string;
   listener: (e: Event) => void;
 };
-
-export type ComponentState = Record<string, any>;
 
 export type Action = {
   type: any;

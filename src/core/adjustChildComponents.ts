@@ -1,8 +1,9 @@
 import Component from './Component.js';
 import { ComponentError } from './ComponentError.js';
+import { ComponentKeyNameMap } from './coreTypes.js';
 
 
-export function adjustChildComponents(parent: Component, childComponentData: Record<string, string>) {
+export function adjustChildComponents(parent: Component, childComponentData: ComponentKeyNameMap) {
   const { childComponents } = parent; 
   for (let key of Object.keys(childComponents)) {
     if (childComponentData[key]) {
