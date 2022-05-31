@@ -12,7 +12,12 @@ type TaskAddModalProps = {
   addItem: (item: Item) => void;
 }
 
-export default class TaskAddModal extends Component<TaskAddModalProps> {
+type TaskAddModalState = {
+  title: string;
+  todoItem: string;
+}
+
+export default class TaskAddModal extends Component<TaskAddModalProps, TaskAddModalState> {
   setup() {
     this.state = {
       title: "",

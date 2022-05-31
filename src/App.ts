@@ -19,6 +19,13 @@ type AppState = {
   currentModalName: string;
 };
 
+const modalConstructorMap: Record<string, new (...args: any[]) => Component> = {
+  "ImageAddModal": ImageAddModal,
+  "VideoAddModal": VideoAddModal,
+  "NoteAddModal": NoteAddModal,
+  "TaskAddModal": TaskAddModal,
+}
+
 export default class App extends Component<{}, AppState> {
   setup() {
     this.state = {
@@ -53,31 +60,10 @@ export default class App extends Component<{}, AppState> {
           }
         });
       case "ImageAddModal":
-        return new ImageAddModal(target, () => {
-          const { addItemToStore } = this;
-          return {
-            close: closeModal.bind(this),
-            addItem: addItemToStore.bind(this),
-          }
-        });
       case "VideoAddModal":
-        return new VideoAddModal(target, () => {
-          const { addItemToStore } = this;
-          return {
-            close: closeModal.bind(this),
-            addItem: addItemToStore.bind(this),
-          }
-        });
       case "NoteAddModal":
-        return new NoteAddModal(target, () => {
-          const { addItemToStore } = this;
-          return {
-            close: closeModal.bind(this),
-            addItem: addItemToStore.bind(this),
-          }
-        });
       case "TaskAddModal":
-        return new TaskAddModal(target, () => {
+        return new modalConstructorMap[name](target, () => {
           const { addItemToStore } = this;
           return {
             close: closeModal.bind(this),

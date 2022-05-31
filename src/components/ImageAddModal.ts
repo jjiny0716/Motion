@@ -10,7 +10,13 @@ type ImageAddModalProps = {
   addItem: (item: Item) => void;
 }
 
-export default class ImageAddModal extends Component<ImageAddModalProps> {
+type TaskAddModalState = {
+  title: string;
+  url: string;
+}
+
+
+export default class ImageAddModal extends Component<ImageAddModalProps, TaskAddModalState> {
   setup() {
     this.state = {
       title: "",

@@ -10,7 +10,12 @@ type VideoAddModalProps = {
   addItem: (item: Item) => void;
 }
 
-export default class VideoAddModal extends Component<VideoAddModalProps> {
+type VideoAddModalState = {
+  title: string;
+  url: string;
+}
+
+export default class VideoAddModal extends Component<VideoAddModalProps, VideoAddModalState> {
   setup() {
     this.state = {
       title: "",
@@ -56,7 +61,7 @@ export default class VideoAddModal extends Component<VideoAddModalProps> {
     })
 
     // state에 입력 반영
-    this.addEventListener("input", "input", (e) => {
+    this.addEventListener("input", "input", (e: Event) => {
       const target = e.target as HTMLInputElement;
       this.setState({ [(target.dataset.name as string).toLowerCase()]: target.value })
     });

@@ -35,3 +35,9 @@ eventTarget, Element등등... closest를 못쓴다거나, dataset에 접근이 �
 ## readonly vs Readonly<T>
 
 - Readonly utility type은 받은 T의 모든 property를 readonly로 만드는 것이다. 헷갈리지 말자
+
+## 클래스 생성자 타입?
+
+- 클래스 생성자를 타입으로 쓰려면 어떻게 해야할까?
+- `new () => Class`
+- `new (...args: any[]) => Class` 인자를 받는 생성자

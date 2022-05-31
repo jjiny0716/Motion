@@ -10,7 +10,12 @@ type NoteAddModalProps = {
   addItem: (item: Item) => void;
 }
 
-export default class NoteAddModal extends Component<NoteAddModalProps> {
+type NoteAddModalState = {
+  title: string;
+  content: string;
+}
+
+export default class NoteAddModal extends Component<NoteAddModalProps, NoteAddModalState> {
   setup() {
     this.state = {
       title: "",

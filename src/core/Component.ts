@@ -100,7 +100,7 @@ export default class Component<P, S> {
     this.attacthedEventListeners = [];
   }
 
-  setState<K extends keyof S>(newState: Pick<S, K>): void {
+  setState<K extends keyof S>(newState: Partial<S>): void {
     for (let [key, value] of Object.entries(newState) as Array<[K, S[K]]>) {
       if (!this.state.hasOwnProperty(key)) {
         console.warn(`Component warning: Setting state which is not exists ('${key}') in '${this.constructor.name}'`);

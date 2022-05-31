@@ -7,6 +7,12 @@ import TaskAddModal from "./components/TaskAddModal.js";
 import ItemContainer from "./components/ItemContainer.js";
 import { store } from "./store/store.js";
 import { addItem } from "./store/item/item.action.js";
+const modalConstructorMap = {
+    "ImageAddModal": ImageAddModal,
+    "VideoAddModal": VideoAddModal,
+    "NoteAddModal": NoteAddModal,
+    "TaskAddModal": TaskAddModal,
+};
 export default class App extends Component {
     setup() {
         this.state = {
@@ -37,31 +43,10 @@ export default class App extends Component {
                     };
                 });
             case "ImageAddModal":
-                return new ImageAddModal(target, () => {
-                    const { addItemToStore } = this;
-                    return {
-                        close: closeModal.bind(this),
-                        addItem: addItemToStore.bind(this),
-                    };
-                });
             case "VideoAddModal":
-                return new VideoAddModal(target, () => {
-                    const { addItemToStore } = this;
-                    return {
-                        close: closeModal.bind(this),
-                        addItem: addItemToStore.bind(this),
-                    };
-                });
             case "NoteAddModal":
-                return new NoteAddModal(target, () => {
-                    const { addItemToStore } = this;
-                    return {
-                        close: closeModal.bind(this),
-                        addItem: addItemToStore.bind(this),
-                    };
-                });
             case "TaskAddModal":
-                return new TaskAddModal(target, () => {
+                return new modalConstructorMap[name](target, () => {
                     const { addItemToStore } = this;
                     return {
                         close: closeModal.bind(this),
