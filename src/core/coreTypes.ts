@@ -14,12 +14,12 @@ export type Action = {
   payload: any;
 };
 
-export type Reducer<S = any, A extends Action = Action> = (
+export type Reducer<S = {}, A extends Action = Action> = (
   state: S | undefined, 
   action: A | undefined,
 ) => S;
 
-export type ReducersMapObject<S = any, A extends Action = Action> = {
+export type ReducersMapObject<S = {}, A extends Action = Action> = {
   [K in keyof S]: Reducer<S[K], A>
 }
 
